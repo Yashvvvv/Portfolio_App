@@ -64,11 +64,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             EbizAppTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    CreateBizCard()
-                }
+                CreateBizCard()
             }
         }
     }
@@ -86,43 +82,38 @@ fun CreateBizCard(){
         Card( modifier = Modifier
             .width(200.dp)
             .height(390.dp)
-            .padding(12.dp),
-            shape = RoundedCornerShape(corner = CornerSize(17.dp)),
-            elevation = CardDefaults.cardElevation(7.dp)) {
+            .padding(6.dp)
+            .animateContentSize(),
+            shape = RoundedCornerShape(corner = CornerSize(20.dp)),
+            elevation = CardDefaults.cardElevation(8.dp)) {
 
-            Column(modifier = Modifier.height(350.dp),
+            Column(modifier = Modifier,
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally) {
 
-                CreateImageprofile()
+                CreateImageProfile()
+
                 Divider(
                     modifier = Modifier.shadow(2.dp),
                     thickness = 1.dp,
                     color = Color.LightGray,)
+
                 CreateInfo()
+
                 Button(onClick = {
-                    buttonClickedState.value = !buttonClickedState.value }) {
+                    buttonClickedState.value =! buttonClickedState.value }) {
 
                     Text(text = "Portfolio",
-                        style =MaterialTheme.typography.labelMedium)
+                        style = MaterialTheme.typography.labelMedium)
 
                 }
 
-                if (buttonClickedState.value){
+                if (buttonClickedState.value) {
                     Content()
                 }
-                else{
-                    Box(){
-
-                    }
-                }
-
             }
-
         }
-
     }
-
 }
 
 @Preview
@@ -130,23 +121,24 @@ fun CreateBizCard(){
 fun Content() {
 
     Box(modifier = Modifier
-        .fillMaxHeight()
-        .fillMaxWidth()
-        .padding(7.dp)) {
+        .fillMaxSize()) {
 
         Surface(modifier = Modifier
-            .padding(5.dp)
-            .fillMaxWidth()
-            .fillMaxHeight(),
+            .padding(10.dp).fillMaxSize(),
             shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-            border = BorderStroke(5.dp, Color.LightGray)
-        ) {
+            border = BorderStroke(4.dp, Color.White)) {
 
-            Portfolio(data = listOf("Project 1","Project 2","Project 3"))
+            Portfolio(data = listOf(
+                "Project 1",
+                "Project 2",
+                "Project 3",
+                "Project 4",
+                "Project 5",
+                "Project 6",
+                "Project 7",
+                "Project 8",))
 
         }
-
-
     }
 }
 
@@ -154,23 +146,21 @@ fun Content() {
 fun Portfolio(data: List<String>) {
     LazyColumn{
         items(data) { item ->
-            Card(
-                modifier = Modifier
-                    .padding(10.dp)
+            Card(modifier = Modifier
+                    .padding(6.dp)
                     .fillMaxWidth(),
                 shape = RectangleShape,
-                elevation = CardDefaults.cardElevation(5.dp)
-            ) {
+                elevation = CardDefaults.cardElevation(6.dp)) {
 
-                Row(
-                    modifier = Modifier
-                        .padding(8.dp)
-                    //.background(MaterialTheme.colorScheme.surface)
-                    //.padding(16.dp)
-                ) {
-                    CreateImageprofile(modifier = Modifier.size(100.dp))
+                Row(modifier = Modifier
+                    .background(MaterialTheme.colorScheme.surface)
+                    .padding(15.dp)) {
+
+                    //Image
+                    CreateImageProfile(modifier = Modifier.size(90.dp))
+
                     Column(modifier = Modifier
-                        .padding(6.dp)
+                        .padding(10.dp)
                         .align(Alignment.CenterVertically)) {
 
                         Text(text = item,
@@ -179,12 +169,8 @@ fun Portfolio(data: List<String>) {
                         Text(text = "A great Project",
                             style = MaterialTheme.typography.bodyMedium)
                     }
-
-
                 }
-
             }
-
         }
     }
 }
@@ -212,7 +198,7 @@ private fun CreateInfo() {
 }
 
 @Composable
-private fun CreateImageprofile(modifier: Modifier = Modifier) {
+private fun CreateImageProfile(modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier
             .size(170.dp)
